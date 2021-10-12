@@ -61,11 +61,11 @@ The constraints for passing the contest are given by a set of test functions (_R
 
 **Material balance test**
 
-![equation](https://latex.codecogs.com/gif.latex?R_z%20%3D%20%5Cfrac%7B%7CV%20%5Ccdot%20y_i%20+%20L%20%5Ccdot%20x_i%20-%20z_i%7C%7D%7B%7CV%20%5Ccdot%20y_i%7C%20+%20%7CL%20%5Ccdot%20x_i%7C%20+%20z_i%7D%20%5Cleq%20%5Cepsilon_z%20%3D%20%5Cepsilon_t)
+![equation](https://latex.codecogs.com/gif.latex?R_z%20%3D%20%5Cmax_i%5C%7B%5Cfrac%7B%7CV%20%5Ccdot%20y_i%20&plus;%20L%20%5Ccdot%20x_i%20-%20z_i%7C%7D%7B%7CV%20%5Ccdot%20y_i%7C%20&plus;%20%7CL%20%5Ccdot%20x_i%7C%20&plus;%20z_i%7D%5C%7D)
 
 **K-value test**
 
-![equation](https://latex.codecogs.com/gif.latex?R_K%20%3D%20%5Cfrac%7B%7Cy_i%20-%20K_i%20%5Ccdot%20x_i%7C%7D%7B%7Cy_i%7C%20+%20%7CK_i%20%5Ccdot%20x_i%7C%7D%20%5Cleq%20%5Cepsilon_K%20%3D%20%5Cepsilon_t)
+![equation](https://latex.codecogs.com/gif.latex?R_K%20%3D%20%5Cmax_i%5C%7B%5Cfrac%7B%7Cy_i%20-%20K_i%20%5Ccdot%20x_i%7C%7D%7B%7Cy_i%7C%20&plus;%20%7CK_i%20%5Ccdot%20x_i%7C%7D%5C%7D)
 
 where the threshold value (ε<sub>t</sub>) is set to be 10<sup>-15</sup>.
 

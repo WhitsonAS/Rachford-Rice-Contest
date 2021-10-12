@@ -22,8 +22,8 @@ def racford_rice_solver(
     
     # ===== REMOVE DUMMY VALUES BELOW =====
     N = 1
-    yi = []
-    xi = []
+    yi = np.array([0])
+    xi = np.array([0])
     V = 0
     L = 0
     # =====================================
