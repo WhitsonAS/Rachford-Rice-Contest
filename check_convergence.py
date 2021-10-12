@@ -5,7 +5,6 @@ from sys import float_info
 
 EPS_T = 1e-15
 EPS_M = float_info.epsilon
-print(EPS_M)
 
 
 def sensitivity(R: float, eps: float):
