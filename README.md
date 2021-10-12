@@ -25,11 +25,11 @@ If you do not want to use Git or know how to use Git, you can manually download 
 
 # How do you enter your code?
 
-The main stucture of the code is not to be modified at all, so you are only supposed to write code in certain designated files or functions. The file that contains the function which you have to change is called `rachford_rice_solution.py` and the function is called `rachford_rice_solver()`. This is the only place where you can change anything. 
+The main stucture of the code is not to be modified at all, so you are only supposed to write code in certain designated files or functions. The file that contains the function which you have to change is called `rachford_rice_solution.py` and the function is called `rachford_rice_solver()`. This is the only place where you can change anything.
 
 The function takes in the number of components (`Nc`) as an integer, the composition (`zi`) as a numpy array, and the K-values (`Ki`) as a numpy array.
 
-The output of the function must be given in the following order, as the following types. The number of iterations used (`N`) as an integer, 
+The output of the function must be given in the following order, as the following types. The number of iterations used (`N`) as an integer,
 
 # Basic theory about Rachford-Rice problem
 
@@ -37,41 +37,41 @@ The Rachford-Rice equation is a combination of (1) the material balance equation
 
 The equation is given by
 
-<img src="https://latex.codecogs.com/gif.latex? h(V)=\sum_{i=1}^{N_c} \frac{z_i \cdot (K_i - 1)}{1 + V \cdot (K_i -1)}" /> 
+![equation](https://latex.codecogs.com/gif.latex?h%28V%29%3D%5Csum_%7Bi%3D1%7D%5E%7BN_c%7D%20%5Cfrac%7Bz_i%20%5Ccdot%20%28K_i%20-%201%29%7D%7B1%20+%20V%20%5Ccdot%20%28K_i%20-1%29%7D)
 
-where z<sub>i</sub> is the total molar composition of component *i*, and *V* is the vapor molar fraction defined by
+where z<sub>i</sub> is the total molar composition of component _i_, and _V_ is the vapor molar fraction defined by
 
-<img src="https://latex.codecogs.com/gif.latex? V = \frac{n_V}{n_V + n_L}" />
+![equation](https://latex.codecogs.com/gif.latex?V%20%3D%20%5Cfrac%7Bn_V%7D%7Bn_V%20+%20n_L%7D)
 
 where n<sub>V</sub> is the total molar amount of the vapor phase and n<sub>L</sub> is the total molar amount of the liquid phase.
 
-The constraints for passing the contest are given by a set of test functions (*R*) and are given by
+The constraints for passing the contest are given by a set of test functions (_R_) and are given by
 
 **Vapor composition test**
 
-<img src="https://latex.codecogs.com/gif.latex? R_y = |1-\sum_{i=1}^{N_c}y_i| \leq \epsilon_y = \epsilon_t + N_c \cdot \epsilon_m" />
+![equation](https://latex.codecogs.com/gif.latex?R_y%20%3D%20%7C1-%5Csum_%7Bi%3D1%7D%5E%7BN_c%7Dy_i%7C%20%5Cleq%20%5Cepsilon_y%20%3D%20%5Cepsilon_t%20+%20N_c%20%5Ccdot%20%5Cepsilon_m)
 
 **Liquid composition test**
 
-<img src="https://latex.codecogs.com/gif.latex? R_x = |1-\sum_{i=1}^{N_c}x_i| \leq \epsilon_x = \epsilon_t + N_c \cdot \epsilon_m" />
+![equation](https://latex.codecogs.com/gif.latex?R_x%20%3D%20%7C1-%5Csum_%7Bi%3D1%7D%5E%7BN_c%7Dx_i%7C%20%5Cleq%20%5Cepsilon_x%20%3D%20%5Cepsilon_t%20+%20N_c%20%5Ccdot%20%5Cepsilon_m)
 
 **Vapor and liquid fraction test**
 
-<img src="https://latex.codecogs.com/gif.latex? R_F = \frac{|V + L - 1|}{|V| + |L| + 1} \leq \epsilon_F = \epsilon_t" />
+![equation](https://latex.codecogs.com/gif.latex?R_F%20%3D%20%5Cfrac%7B%7CV%20+%20L%20-%201%7C%7D%7B%7CV%7C%20+%20%7CL%7C%20+%201%7D%20%5Cleq%20%5Cepsilon_F%20%3D%20%5Cepsilon_t)
 
 **Material balance test**
 
-<img src="https://latex.codecogs.com/gif.latex? R_z = \frac{|V \cdot y_i + L \cdot x_i - z_i|}{|V \cdot y_i| + |L \cdot x_i| + z_i} \leq \epsilon_z = \epsilon_t" />
+![equation](https://latex.codecogs.com/gif.latex?R_z%20%3D%20%5Cfrac%7B%7CV%20%5Ccdot%20y_i%20+%20L%20%5Ccdot%20x_i%20-%20z_i%7C%7D%7B%7CV%20%5Ccdot%20y_i%7C%20+%20%7CL%20%5Ccdot%20x_i%7C%20+%20z_i%7D%20%5Cleq%20%5Cepsilon_z%20%3D%20%5Cepsilon_t)
 
 **K-value test**
 
-<img src="https://latex.codecogs.com/gif.latex? R_F = \frac{|y_i - K_i \cdot x_i|}{|y_i| + |K_i \cdot x_i|} \leq \epsilon_K = \epsilon_t" />
+![equation](https://latex.codecogs.com/gif.latex?R_K%20%3D%20%5Cfrac%7B%7Cy_i%20-%20K_i%20%5Ccdot%20x_i%7C%7D%7B%7Cy_i%7C%20+%20%7CK_i%20%5Ccdot%20x_i%7C%7D%20%5Cleq%20%5Cepsilon_K%20%3D%20%5Cepsilon_t)
 
 where the threshold value (ε<sub>t</sub>) is set to be 10<sup>-15</sup>.
 
-The tests will be judged based on their *sensitivity* which is given by
+The tests will be judged based on their _sensitivity_ which is given by
 
-<img src="https://latex.codecogs.com/gif.latex? sensitivity = \log{(\frac{R}{\epsilon})}" />
+![equation](https://latex.codecogs.com/gif.latex?sensitivity%20%3D%20%5Clog%7B%28%5Cfrac%7BR%7D%7B%5Cepsilon%7D%29%7D)
 
 For more information about the Rachford-Rice solution, watch the following videos:
 
