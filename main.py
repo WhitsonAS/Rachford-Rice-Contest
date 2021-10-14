@@ -11,9 +11,17 @@ from check_convergence import is_converged
 from rachford_rice_solution import racford_rice_solver
 
 # (1) Read test cases for Rachford-Rice contest.
-list_of_compositions = pd.read_csv("compositions.csv")
+print("===============================")
+print("Now opening mixture data files!")
+print("===============================")
+list_of_compositions = pd.read_csv(
+    "compositions.csv",
+)
 list_of_k_values = pd.read_csv("k-values.csv")
 
+print("==========================")
+print("Now ordering mixture data!")
+print("==========================")
 number_of_components = list_of_compositions.iloc[:, 0].to_list()
 number_of_cases = len(number_of_components)
 list_of_compositions = [
@@ -37,6 +45,10 @@ convergence_flags = [False] * number_of_cases  # False is fail and True is pass
 run_time = 0
 
 # (2) Iterate through, solve, and test each test case.
+print("======================")
+print("Now running all cases!")
+print("======================")
+
 for n in range(number_of_cases):
     print("======================================================")
     print(f"Running case {n+1} of {number_of_cases}")
@@ -72,17 +84,20 @@ for n in range(number_of_cases):
 runs_failed = number_of_cases - np.count_nonzero(convergence_flags)
 
 # (3) Print results and summary to output files.
+print("================================")
+
+print("Now generating all output files!")
+print("================================")
 with open("summary.txt", "w") as file:
     file.write("====================================================================\n")
     file.write("This is a summary of the calculations: \n")
     file.write("====================================================================\n")
     file.write(f"The program failed for {runs_failed} of {number_of_cases} runs!\n")
-    file.write(f"The self reported total number of iteration was: {sum(iterations)}.\n")
     file.write(
-        f"The average number of iterations was                  : {sum(iterations)/number_of_cases}.\n"
+        f"The average number of iterations was                  : {sum(iterations)/number_of_cases} \n"
     )
     file.write(
-        f"The median number of iterations was                   : {np.median(iterations)}.\n"
+        f"The median number of iterations was                   : {np.median(iterations)} \n"
     )
     file.write(
         f"The maximum number of iteration was                   : {max(iterations)}\n"
@@ -136,3 +151,18 @@ with open("case-summary-detailed.txt", "w") as file:
         file.write(f"Vapor fraction : {vapor_fractions[i]} \n")
         file.write(f"Liquid fraction: {liquid_fractions[i]} \n")
         file.write("==================================================================")
+
+if runs_failed == 0:
+    print("==========================================")
+    print("Congratulations! You passed all the cases!")
+    print("==========================================")
+else:
+    print(
+        "==============================================================================="
+    )
+    print(
+        f"You failed {runs_failed} of {number_of_cases} cases! Better luck next time :-)"
+    )
+    print(
+        "==============================================================================="
+    )
