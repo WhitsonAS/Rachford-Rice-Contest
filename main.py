@@ -35,6 +35,8 @@ run_time = 0
 
 # (2) Iterate through, solve, and test each test case.
 for n in range(number_of_cases):
+    print("======================================================")
+    print(f"Running case {n+1} of {number_of_cases}")
     # (2.1) Make list into numpy array
     Nc = int(number_of_components[n])
     compositions = np.array(list_of_compositions[n])
@@ -62,7 +64,9 @@ for n in range(number_of_cases):
         k_values,
         print_to_console=False
     )
-    runs_failed = sum(np.array(convergence_flags) == False)
+    print(f"Did the case pass: {convergence_flags[n]}")
+
+runs_failed = sum(np.array(convergence_flags) == False)
 
 
 # (3) Print results and summary to output files.
