@@ -18,6 +18,7 @@ number_of_components = list_of_compositions.iloc[:, 0].to_list()
 number_of_cases = len(number_of_components)
 list_of_compositions = [
     list_of_compositions.iloc[n, 1 : Nc + 1].to_numpy()
+    / np.sum(list_of_compositions.iloc[n, 1 : Nc + 1].to_numpy())
     for n, Nc in enumerate(number_of_components)
 ]
 list_of_k_values = [
@@ -64,7 +65,7 @@ for n in range(number_of_cases):
         liquid_fractions[n],
         compositions,
         k_values,
-        print_to_console=False
+        print_to_console=False,
     )
     print(f"Did the case pass: {convergence_flags[n]}")
 
@@ -76,9 +77,22 @@ with open("summary.txt", "w") as file:
     file.write("This is a summary of the calculations: \n")
     file.write("====================================================================\n")
     file.write(f"The program failed for {runs_failed} of {number_of_cases} runs!\n")
-    file.write(f"The self reported number of iteration was {sum(iterations)}.\n")
-    file.write(f"The average number of iterations was {sum(iterations)/number_of_cases}.\n")
-    file.write(f"The total runtime was {np.round(run_time*1e3,2)} ms.")
+    file.write(f"The self reported total number of iteration was: {sum(iterations)}.\n")
+    file.write(
+        f"The average number of iterations was                  : {sum(iterations)/number_of_cases}.\n"
+    )
+    file.write(
+        f"The median number of iterations was                   : {np.median(iterations)}.\n"
+    )
+    file.write(
+        f"The maximum number of iteration was                   : {max(iterations)}\n"
+    )
+    file.write(
+        f"The minimun number of iteration was                   : {min(iterations)}\n"
+    )
+    file.write(
+        f"The total runtime was                                 : {np.round(run_time*1e3,2)} ms."
+    )
 
 with open("case-summary.txt", "w") as file:
     for i in range(number_of_cases):
@@ -89,7 +103,9 @@ with open("case-summary.txt", "w") as file:
         file.write(
             "====================================================================\n"
         )
-        file.write(f"Did the case pass the test             : {convergence_flags[i]} \n")
+        file.write(
+            f"Did the case pass the test             : {convergence_flags[i]} \n"
+        )
         file.write(f"severity of the vapor composition test : {severities[i][0]} \n")
         file.write(f"severity of the liquid composition test: {severities[i][1]} \n")
         file.write(f"severity of the molar fraction test    : {severities[i][2]} \n")
@@ -106,7 +122,9 @@ with open("case-summary-detailed.txt", "w") as file:
         file.write(
             "====================================================================\n"
         )
-        file.write(f"Did the case pass the test             : {convergence_flags[i]} \n")
+        file.write(
+            f"Did the case pass the test             : {convergence_flags[i]} \n"
+        )
         file.write(f"severity of the vapor composition test : {severities[i][0]} \n")
         file.write(f"severity of the liquid composition test: {severities[i][1]} \n")
         file.write(f"severity of the molar fraction test    : {severities[i][2]} \n")
