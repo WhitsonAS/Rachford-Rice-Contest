@@ -29,7 +29,7 @@ def fraction_test(V: float, L: float):
 def matbal_test(V: float, yi: np.ndarray, L: float, xi: np.ndarray, zi: np.ndarray):
     eps_z = EPS_T
     matbal_sensitivity = sensitivity(
-        np.max(abs(V * yi + L * xi - zi) / (abs(V * yi) + abs(L * xi) + zi)), eps_z
+        np.max(np.abs(V * yi + L * xi - zi) / (np.abs(V * yi) + np.abs(L * xi) + zi)), eps_z
     )
     return matbal_sensitivity, is_it_converged(matbal_sensitivity)
 
@@ -37,7 +37,7 @@ def matbal_test(V: float, yi: np.ndarray, L: float, xi: np.ndarray, zi: np.ndarr
 def k_value_test(yi: np.ndarray, xi: np.ndarray, Ki: np.ndarray):
     eps_k = EPS_T
     kvalue_sensitivity = sensitivity(
-        np.max(abs(yi - Ki * xi) / (abs(yi) + abs(Ki * xi))), eps_k
+        np.max(np.abs(yi - Ki * xi) / (np.abs(yi) + np.abs(Ki * xi))), eps_k
     )
     return kvalue_sensitivity, is_it_converged(kvalue_sensitivity)
 
