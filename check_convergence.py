@@ -1,21 +1,20 @@
-import pandas as pd
-import numpy as np
-from typing import List
 from sys import float_info
+
+import numpy as np
 
 EPS_T = 1e-15
 EPS_M = float_info.epsilon
 
 
 def sensitivity(R: float, eps: float):
-    return np.math.log10(R / eps) if R else -1000
+    return np.math.log10(R / eps) if R else -np.inf
 
 
 def is_it_converged(test_sensitivity: float):
-    return test_sensitivity < 0
+    return test_sensitivity <= 0
 
 
-def phase_composition_test(ui: np.array, Nc: int):
+def phase_composition_test(ui: np.ndarray, Nc: int):
     eps_phase = EPS_T + Nc * EPS_M
     comp_sensitivity = sensitivity(abs(1 - np.sum(ui)), eps_phase)
     return comp_sensitivity, is_it_converged(comp_sensitivity)
@@ -27,7 +26,7 @@ def fraction_test(V: float, L: float):
     return fraction_sensitivity, is_it_converged(fraction_sensitivity)
 
 
-def matbal_test(V: float, yi: np.array, L: float, xi: np.array, zi: np.array):
+def matbal_test(V: float, yi: np.ndarray, L: float, xi: np.ndarray, zi: np.ndarray):
     eps_z = EPS_T
     matbal_sensitivity = sensitivity(
         np.max(abs(V * yi + L * xi - zi) / (abs(V * yi) + abs(L * xi) + zi)), eps_z
@@ -35,7 +34,7 @@ def matbal_test(V: float, yi: np.array, L: float, xi: np.array, zi: np.array):
     return matbal_sensitivity, is_it_converged(matbal_sensitivity)
 
 
-def k_value_test(yi: np.array, xi: np.array, Ki: np.array):
+def k_value_test(yi: np.ndarray, xi: np.ndarray, Ki: np.ndarray):
     eps_k = EPS_T
     kvalue_sensitivity = sensitivity(
         np.max(abs(yi - Ki * xi) / (abs(yi) + abs(Ki * xi))), eps_k
@@ -43,7 +42,7 @@ def k_value_test(yi: np.array, xi: np.array, Ki: np.array):
     return kvalue_sensitivity, is_it_converged(kvalue_sensitivity)
 
 
-def inside_bounds(V: float, Ki: np.array):
+def inside_bounds(V: float, Ki: np.ndarray):
     Vmin = 1 / (1 - np.max(Ki))
     Vmax = 1 / (1 - np.min(Ki))
     return V < Vmax and Vmin < V
@@ -51,12 +50,12 @@ def inside_bounds(V: float, Ki: np.array):
 
 def is_converged(
     Nc: int,
-    yi: np.array,
-    xi: np.array,
+    yi: np.ndarray,
+    xi: np.ndarray,
     V: float,
     L: float,
-    zi: np.array,
-    Ki: np.array,
+    zi: np.ndarray,
+    Ki: np.ndarray,
     print_to_console: bool = False
 ):
     vap_comp_sensitivity, is_vap_comp_converged = phase_composition_test(yi, Nc)
