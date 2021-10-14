@@ -31,6 +31,6 @@ def racford_rice_solver(
     L = 0
     # =====================================
     if N >= MAX_ITR:
-    print("The maximum number of iterations was reached!")
+        print("The maximum number of iterations was exceeded!")
 
     return N, yi, xi, V, L
