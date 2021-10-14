@@ -1,21 +1,20 @@
-import pandas as pd
-import numpy as np
-from typing import List
 from sys import float_info
+
+import numpy as np
 
 EPS_T = 1e-15
 EPS_M = float_info.epsilon
 
 
 def severity(R: float, eps: float):
-    return np.math.log10(R / eps) if R else -1000
+    return np.math.log10(R / eps) if R else -np.inf
 
 
 def is_it_converged(test_severity: float):
-    return test_severity < 0
+    return test_severity <= 0
 
 
-def phase_composition_test(ui: np.array, Nc: int):
+def phase_composition_test(ui: np.ndarray, Nc: int):
     eps_phase = EPS_T + Nc * EPS_M
     comp_severity = severity(abs(1 - np.sum(ui)), eps_phase)
     return comp_severity, is_it_converged(comp_severity)
@@ -27,23 +26,24 @@ def fraction_test(V: float, L: float):
     return fraction_severity, is_it_converged(fraction_severity)
 
 
-def matbal_test(V: float, yi: np.array, L: float, xi: np.array, zi: np.array):
+def matbal_test(V: float, yi: np.ndarray, L: float, xi: np.ndarray, zi: np.ndarray):
     eps_z = EPS_T
     matbal_severity = severity(
-        np.max(abs(V * yi + L * xi - zi) / (abs(V * yi) + abs(L * xi) + zi)), eps_z
+        np.max(np.abs(V * yi + L * xi - zi) / (np.abs(V * yi) + np.abs(L * xi) + zi)),
+        eps_z,
     )
     return matbal_severity, is_it_converged(matbal_severity)
 
 
-def k_value_test(yi: np.array, xi: np.array, Ki: np.array):
+def k_value_test(yi: np.ndarray, xi: np.ndarray, Ki: np.ndarray):
     eps_k = EPS_T
     kvalue_severity = severity(
-        np.max(abs(yi - Ki * xi) / (abs(yi) + abs(Ki * xi))), eps_k
+        np.max(np.abs(yi - Ki * xi) / (np.abs(yi) + np.abs(Ki * xi))), eps_k
     )
     return kvalue_severity, is_it_converged(kvalue_severity)
 
 
-def inside_bounds(V: float, Ki: np.array):
+def inside_bounds(V: float, Ki: np.ndarray):
     Vmin = 1 / (1 - np.max(Ki))
     Vmax = 1 / (1 - np.min(Ki))
     return V < Vmax and Vmin < V
@@ -51,13 +51,13 @@ def inside_bounds(V: float, Ki: np.array):
 
 def is_converged(
     Nc: int,
-    yi: np.array,
-    xi: np.array,
+    yi: np.ndarray,
+    xi: np.ndarray,
     V: float,
     L: float,
-    zi: np.array,
-    Ki: np.array,
-    print_to_console: bool = False
+    zi: np.ndarray,
+    Ki: np.ndarray,
+    print_to_console: bool = False,
 ):
     vap_comp_severity, is_vap_comp_converged = phase_composition_test(yi, Nc)
     liq_comp_severity, is_liq_comp_converged = phase_composition_test(xi, Nc)

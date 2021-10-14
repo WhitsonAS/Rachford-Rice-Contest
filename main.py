@@ -2,34 +2,36 @@
 # To learn more about how you can compete in the contest and where
 # you have add your code, take a look at the "readme" file.
 
-import pandas as pd
-import numpy as np
-
 from time import perf_counter
-from rachford_rice_solution import racford_rice_solver
+
+import numpy as np
+import pandas as pd
+
 from check_convergence import is_converged
+from rachford_rice_solution import racford_rice_solver
 
 # (1) Read test cases for Rachford-Rice contest.
 list_of_compositions = pd.read_csv("compositions.csv")
 list_of_k_values = pd.read_csv("k-values.csv")
+
 number_of_components = list_of_compositions.iloc[:, 0].to_list()
 number_of_cases = len(number_of_components)
 list_of_compositions = [
-    list_of_compositions.iloc[n, 1 : number_of_components[n] + 1].to_list()
-    for n in range(number_of_cases)
+    list_of_compositions.iloc[n, 1 : Nc + 1].to_numpy()
+    for n, Nc in enumerate(number_of_components)
 ]
 list_of_k_values = [
-    list_of_k_values.iloc[n, : number_of_components[n]].to_list()
-    for n in range(number_of_cases)
+    list_of_k_values.iloc[n, :Nc].to_numpy()
+    for n, Nc in enumerate(number_of_components)
 ]
 
 # Pre-allocate lists for summary and results files.
 iterations = [0] * number_of_cases
-vapor_compositions = [0] * number_of_cases
-liquid_compositions = [0] * number_of_cases
+vapor_compositions = [None] * number_of_cases
+liquid_compositions = [None] * number_of_cases
 vapor_fractions = [0] * number_of_cases
 liquid_fractions = [0] * number_of_cases
-severities = [[0] * 5] * number_of_cases
+severities = [None] * number_of_cases
 convergence_flags = [False] * number_of_cases  # False is fail and True is pass
 run_time = 0
 
@@ -37,23 +39,23 @@ run_time = 0
 for n in range(number_of_cases):
     print("======================================================")
     print(f"Running case {n+1} of {number_of_cases}")
-    # (2.1) Make list into numpy array
-    Nc = int(number_of_components[n])
-    compositions = np.array(list_of_compositions[n])
-    k_values = np.array(list_of_k_values[n])
 
-    # (2.2) Run Rachford-Rice solver (USER DEFINED FUCTION)
+    Nc = int(number_of_components[n])
+    compositions = list_of_compositions[n]
+    k_values = list_of_k_values[n]
+
+    # (2.1) Run Rachford-Rice solver (USER DEFINED FUCTION)
     t0 = perf_counter()
-    [
+    (
         iterations[n],
         vapor_compositions[n],
         liquid_compositions[n],
         vapor_fractions[n],
         liquid_fractions[n],
-    ] = racford_rice_solver(Nc, compositions, k_values)
+    ) = racford_rice_solver(Nc, compositions, k_values)
     run_time += perf_counter() - t0
 
-    # (2.3) Run tests on solver solutions
+    # (2.2) Run tests on solver solutions
     severities[n], convergence_flags[n] = is_converged(
         Nc,
         vapor_compositions[n],
@@ -66,8 +68,7 @@ for n in range(number_of_cases):
     )
     print(f"Did the case pass: {convergence_flags[n]}")
 
-runs_failed = sum(np.array(convergence_flags) == False)
-
+runs_failed = number_of_cases - np.count_nonzero(convergence_flags)
 
 # (3) Print results and summary to output files.
 with open("summary.txt", "w") as file:
@@ -112,11 +113,8 @@ with open("case-summary-detailed.txt", "w") as file:
         file.write(f"severity of the material balance test  : {severities[i][3]} \n")
         file.write(f"severity of the K-value test           : {severities[i][4]} \n")
         file.write("===== Detailed Data ===== \n")
-        file.write(f"Vapor composition : {list(vapor_compositions[n])} \n")
-        file.write(f"Liquid composition: {list(liquid_compositions[n])} \n")
-        file.write(f"Vapor fraction : {vapor_fractions[n]} \n")
-        file.write(f"Liquid fraction: {liquid_fractions[n]} \n")
+        file.write(f"Vapor composition : {vapor_compositions[i]} \n")
+        file.write(f"Liquid composition: {liquid_compositions[i]} \n")
+        file.write(f"Vapor fraction : {vapor_fractions[i]} \n")
+        file.write(f"Liquid fraction: {liquid_fractions[i]} \n")
         file.write("==================================================================")
-
-vapor_fractions[n]
-liquid_fractions[n]
