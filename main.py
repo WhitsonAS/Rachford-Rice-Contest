@@ -10,6 +10,16 @@ import pandas as pd
 from check_convergence import is_converged
 from rachford_rice_solution import racford_rice_solver
 
+print("\n")
+print("***********************")
+print("*                     *")
+print("*     whitson (c)     *")
+print("*    Rachford-Rice    *")
+print("*       Contest       *")
+print("*     15-10-2021      *")
+print("*                     *")
+print("***********************")
+
 # (1) Read test cases for Rachford-Rice contest.
 print("===============================")
 print("Now opening mixture data files!")
