@@ -69,9 +69,9 @@ The constraints for passing the contest are given by a set of test functions (_R
 
 where the threshold value (ε<sub>t</sub>) is set to be 10<sup>-15</sup>.
 
-The tests will be judged based on their _sensitivity_ which is given by
+The tests will be judged based on their _severity_ which is given by
 
-![equation](https://latex.codecogs.com/gif.latex?sensitivity%20%3D%20%5Clog%7B%28%5Cfrac%7BR%7D%7B%5Cepsilon%7D%29%7D)
+![equation](https://latex.codecogs.com/gif.latex?severity%20%3D%20%5Clog%7B%28%5Cfrac%7BR%7D%7B%5Cepsilon%7D%29%7D)
 
 For more information about the Rachford-Rice solution, watch the following videos:
 

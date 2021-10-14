@@ -7,40 +7,40 @@ EPS_T = 1e-15
 EPS_M = float_info.epsilon
 
 
-def sensitivity(R: float, eps: float):
+def severity(R: float, eps: float):
     return np.math.log10(R / eps) if R else -1000
 
 
-def is_it_converged(test_sensitivity: float):
-    return test_sensitivity < 0
+def is_it_converged(test_severity: float):
+    return test_severity < 0
 
 
 def phase_composition_test(ui: np.array, Nc: int):
     eps_phase = EPS_T + Nc * EPS_M
-    comp_sensitivity = sensitivity(abs(1 - np.sum(ui)), eps_phase)
-    return comp_sensitivity, is_it_converged(comp_sensitivity)
+    comp_severity = severity(abs(1 - np.sum(ui)), eps_phase)
+    return comp_severity, is_it_converged(comp_severity)
 
 
 def fraction_test(V: float, L: float):
     eps_f = EPS_T
-    fraction_sensitivity = sensitivity(abs(V + L - 1) / (abs(V) + abs(L) + 1), eps_f)
-    return fraction_sensitivity, is_it_converged(fraction_sensitivity)
+    fraction_severity = severity(abs(V + L - 1) / (abs(V) + abs(L) + 1), eps_f)
+    return fraction_severity, is_it_converged(fraction_severity)
 
 
 def matbal_test(V: float, yi: np.array, L: float, xi: np.array, zi: np.array):
     eps_z = EPS_T
-    matbal_sensitivity = sensitivity(
+    matbal_severity = severity(
         np.max(abs(V * yi + L * xi - zi) / (abs(V * yi) + abs(L * xi) + zi)), eps_z
     )
-    return matbal_sensitivity, is_it_converged(matbal_sensitivity)
+    return matbal_severity, is_it_converged(matbal_severity)
 
 
 def k_value_test(yi: np.array, xi: np.array, Ki: np.array):
     eps_k = EPS_T
-    kvalue_sensitivity = sensitivity(
+    kvalue_severity = severity(
         np.max(abs(yi - Ki * xi) / (abs(yi) + abs(Ki * xi))), eps_k
     )
-    return kvalue_sensitivity, is_it_converged(kvalue_sensitivity)
+    return kvalue_severity, is_it_converged(kvalue_severity)
 
 
 def inside_bounds(V: float, Ki: np.array):
@@ -59,11 +59,11 @@ def is_converged(
     Ki: np.array,
     print_to_console: bool = False
 ):
-    vap_comp_sensitivity, is_vap_comp_converged = phase_composition_test(yi, Nc)
-    liq_comp_sensitivity, is_liq_comp_converged = phase_composition_test(xi, Nc)
-    fraction_sensitivity, is_fraction_converged = fraction_test(V, L)
-    matbal_sensitivity, is_matbal_converged = matbal_test(V, yi, L, xi, zi)
-    kvalue_sensitivity, is_kvalue_converged = k_value_test(yi, xi, Ki)
+    vap_comp_severity, is_vap_comp_converged = phase_composition_test(yi, Nc)
+    liq_comp_severity, is_liq_comp_converged = phase_composition_test(xi, Nc)
+    fraction_severity, is_fraction_converged = fraction_test(V, L)
+    matbal_severity, is_matbal_converged = matbal_test(V, yi, L, xi, zi)
+    kvalue_severity, is_kvalue_converged = k_value_test(yi, xi, Ki)
 
     if print_to_console:
         print("==================================================================")
@@ -84,11 +84,11 @@ def is_converged(
         and inside_bounds(V, Ki)
     )
 
-    sensitivities = [
-        vap_comp_sensitivity,
-        liq_comp_sensitivity,
-        fraction_sensitivity,
-        matbal_sensitivity,
-        kvalue_sensitivity,
+    severities = [
+        vap_comp_severity,
+        liq_comp_severity,
+        fraction_severity,
+        matbal_severity,
+        kvalue_severity,
     ]
-    return sensitivities, check_if_converged
+    return severities, check_if_converged

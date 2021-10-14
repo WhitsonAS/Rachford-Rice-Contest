@@ -29,7 +29,7 @@ vapor_compositions = [0] * number_of_cases
 liquid_compositions = [0] * number_of_cases
 vapor_fractions = [0] * number_of_cases
 liquid_fractions = [0] * number_of_cases
-sensitivities = [[0] * 5] * number_of_cases
+severities = [[0] * 5] * number_of_cases
 convergence_flags = [False] * number_of_cases  # False is fail and True is pass
 run_time = 0
 
@@ -54,7 +54,7 @@ for n in range(number_of_cases):
     run_time += perf_counter() - t0
 
     # (2.3) Run tests on solver solutions
-    sensitivities[n], convergence_flags[n] = is_converged(
+    severities[n], convergence_flags[n] = is_converged(
         Nc,
         vapor_compositions[n],
         liquid_compositions[n],
@@ -88,12 +88,12 @@ with open("case-summary.txt", "w") as file:
         file.write(
             "====================================================================\n"
         )
-        file.write(f"Did the case pass the test                : {convergence_flags[i]} \n")
-        file.write(f"Sensitivity of the vapor composition test : {sensitivities[i][0]} \n")
-        file.write(f"Sensitivity of the liquid composition test: {sensitivities[i][1]} \n")
-        file.write(f"Sensitivity of the molar fraction test    : {sensitivities[i][2]} \n")
-        file.write(f"Sensitivity of the material balance test  : {sensitivities[i][3]} \n")
-        file.write(f"Sensitivity of the K-value test           : {sensitivities[i][4]} \n")
+        file.write(f"Did the case pass the test             : {convergence_flags[i]} \n")
+        file.write(f"severity of the vapor composition test : {severities[i][0]} \n")
+        file.write(f"severity of the liquid composition test: {severities[i][1]} \n")
+        file.write(f"severity of the molar fraction test    : {severities[i][2]} \n")
+        file.write(f"severity of the material balance test  : {severities[i][3]} \n")
+        file.write(f"severity of the K-value test           : {severities[i][4]} \n")
         file.write("==================================================================")
 
 with open("case-summary-detailed.txt", "w") as file:
@@ -105,12 +105,12 @@ with open("case-summary-detailed.txt", "w") as file:
         file.write(
             "====================================================================\n"
         )
-        file.write(f"Did the case pass the test                : {convergence_flags[i]} \n")
-        file.write(f"Sensitivity of the vapor composition test : {sensitivities[i][0]} \n")
-        file.write(f"Sensitivity of the liquid composition test: {sensitivities[i][1]} \n")
-        file.write(f"Sensitivity of the molar fraction test    : {sensitivities[i][2]} \n")
-        file.write(f"Sensitivity of the material balance test  : {sensitivities[i][3]} \n")
-        file.write(f"Sensitivity of the K-value test           : {sensitivities[i][4]} \n")
+        file.write(f"Did the case pass the test             : {convergence_flags[i]} \n")
+        file.write(f"severity of the vapor composition test : {severities[i][0]} \n")
+        file.write(f"severity of the liquid composition test: {severities[i][1]} \n")
+        file.write(f"severity of the molar fraction test    : {severities[i][2]} \n")
+        file.write(f"severity of the material balance test  : {severities[i][3]} \n")
+        file.write(f"severity of the K-value test           : {severities[i][4]} \n")
         file.write("===== Detailed Data ===== \n")
         file.write(f"Vapor composition : {list(vapor_compositions[n])} \n")
         file.write(f"Liquid composition: {list(liquid_compositions[n])} \n")
