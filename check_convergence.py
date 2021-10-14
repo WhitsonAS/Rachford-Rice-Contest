@@ -8,7 +8,7 @@ EPS_M = float_info.epsilon
 
 
 def sensitivity(R: float, eps: float):
-    return np.math.log10(R / eps)
+    return np.math.log10(R / eps) if R else -1000
 
 
 def is_it_converged(test_sensitivity: float):
@@ -38,7 +38,7 @@ def matbal_test(V: float, yi: np.array, L: float, xi: np.array, zi: np.array):
 def k_value_test(yi: np.array, xi: np.array, Ki: np.array):
     eps_k = EPS_T
     kvalue_sensitivity = sensitivity(
-        np.max(abs(yi + Ki * xi) / (abs(yi) + abs(Ki * xi))), eps_k
+        np.max(abs(yi - Ki * xi) / (abs(yi) + abs(Ki * xi))), eps_k
     )
     return kvalue_sensitivity, is_it_converged(kvalue_sensitivity)
 
@@ -57,12 +57,23 @@ def is_converged(
     L: float,
     zi: np.array,
     Ki: np.array,
+    print_to_console: bool = False
 ):
     vap_comp_sensitivity, is_vap_comp_converged = phase_composition_test(yi, Nc)
     liq_comp_sensitivity, is_liq_comp_converged = phase_composition_test(xi, Nc)
     fraction_sensitivity, is_fraction_converged = fraction_test(V, L)
     matbal_sensitivity, is_matbal_converged = matbal_test(V, yi, L, xi, zi)
-    kvalue_sensitivity, is_kvalue_converged = k_value_test(yi, zi, Ki)
+    kvalue_sensitivity, is_kvalue_converged = k_value_test(yi, xi, Ki)
+
+    if print_to_console:
+        print("==================================================================")
+        print(f"Did the vapor composition test converge : {is_vap_comp_converged}")
+        print(f"Did the liquid composition test converge: {is_liq_comp_converged}")
+        print(f"Did the molar fraction test converge    : {is_fraction_converged}")
+        print(f"Did the material balance test converge  : {is_matbal_converged}")
+        print(f"Did the K-value test converge           : {is_kvalue_converged}")
+        print(f"Was the solution within the bounds      : {inside_bounds(V, Ki)}")
+        print("==================================================================\n")
 
     check_if_converged = (
         is_vap_comp_converged
