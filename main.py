@@ -72,6 +72,7 @@ with open("summary.txt", "w") as file:
     file.write("====================================================================\n")
     file.write(f"The program failed for {runs_failed} of {number_of_cases} runs!\n")
     file.write(f"The self reported number of iteration was {sum(iterations)}.\n")
+    file.write(f"The average number of iterations was {sum(iterations)/number_of_cases}.\n")
     file.write(f"The total runtime was {np.round(run_time*1e3,2)} ms.")
 
 with open("case-summary.txt", "w") as file:
