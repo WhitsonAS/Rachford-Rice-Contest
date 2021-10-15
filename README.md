@@ -33,7 +33,7 @@ The output of the function must be given in the following order, as the followin
 
 For debugging purposes, there is an option in section (3) in the `main.py` file in the function called `is_converged()` where you can turn on an optinal variable called `print_to_console` (which is `False` by default) by setting it to `True`. This feature will print some useful information about which tests pass / fail for each case. 
 
-See [video 5]() for an example of how to add you code.
+See [video 5](https://youtu.be/b7EK3Ea805A) for an example of how to add you code.
 
 Note that you're not allowed to change the floating point precision to get the desired threshold! The goal is that your algorithm should be able to have a threshold equal to your floating point precision. Any solution based on floating point manipulation of this kind will be **disqualified**. 
 
@@ -91,7 +91,7 @@ For more information about the Rachford-Rice solution, watch the following video
 - Video 2 found [here](https://youtu.be/yL6-QPKd-aY)
 - Video 3 found [here](https://youtu.be/_4qwN6tqa_4)
 - Video 4 found [here](https://youtu.be/6ASOMrjE_hQ)
-- Video 5 found [here]()
+- Video 5 found [here](https://youtu.be/b7EK3Ea805A)
 
 # List of participants who have successfully completed
 
