@@ -35,6 +35,8 @@ For debugging purposes, there is an option in section (3) in the `main.py` file 
 
 See [video 5]() for an example of how to add you code.
 
+Note that you're not allowed to change the floating point precision to get the desired threshold! The goal is that your algorithm should be able to have a threshold equal to your floating point precision. Any solution based on floating point manipulation of this kind will be **disqualified**. 
+
 # Basic theory about Rachford-Rice problem
 
 The Rachford-Rice equation is a combination of (1) the material balance equation, (2) the assumption that the vapor (y<sub>i</sub>) and liquid (x<sub>i</sub>) compositions are defined by a constant set of K-values (K<sub>i</sub>) and (3) that the sum of vapor and liquid molar fractions sum to one.
