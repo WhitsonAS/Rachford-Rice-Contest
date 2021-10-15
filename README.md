@@ -37,6 +37,12 @@ See [video 5]() for an example of how to add you code.
 
 Note that you're not allowed to change the floating point precision to get the desired threshold! The goal is that your algorithm should be able to have a threshold equal to your floating point precision. Any solution based on floating point manipulation of this kind will be **disqualified**. 
 
+When you have developed a code that you want to submit, make a folder within the folder called `Solutions` with the date of your submission (YYYYMMDD) and your name (e.g. `20211015-Markus-Hays-Nielsen`) and add a file called `solution.py` within this folder (the relative path should look like this: `Solutions/20211015-Markus-Hays-Nielsen/solution-py`). The solution file should be possible to copy and paste straight into `rachford_rice_solution.py` and run with no modifications needed. If there is any issue with running your solution, you will be contacted and asked to fix the issue. If no answer is recived, the solution will be removed. This is meant to make everything easier for the reviewer and anyone else who wants to try your code.
+
+The procedure for adding your code to the repository is to first make a new branch with your name (e.g. `markus-hays-nielsen`) and once you are ready to submit you can create a pull request with your file(s) in the structure detailed above. Once your code has been reviewed, we will add your code to the main branch and it will become public. 
+
+If you want to submit you solution privately, please contact us by mail at **markushays@whitson.com**. 
+
 # Basic theory about Rachford-Rice problem
 
 The Rachford-Rice equation is a combination of (1) the material balance equation, (2) the assumption that the vapor (y<sub>i</sub>) and liquid (x<sub>i</sub>) compositions are defined by a constant set of K-values (K<sub>i</sub>) and (3) that the sum of vapor and liquid molar fractions sum to one.

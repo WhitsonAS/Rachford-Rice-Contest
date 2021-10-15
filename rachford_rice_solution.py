@@ -1,8 +1,8 @@
 from typing import Tuple
 
 import numpy as np
+from check_convergence import EPS_T
 
-EPS_T = 1e-15
 MAX_ITR = 100
 
 
