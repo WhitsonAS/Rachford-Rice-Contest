@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 from check_convergence import is_converged
-from rachford_rice_solution import racford_rice_solver
+from rachford_rice_solution import rachford_rice_solver
 
 print("\n")
 print("***********************")
@@ -75,7 +75,7 @@ for n in range(number_of_cases):
         liquid_compositions[n],
         vapor_fractions[n],
         liquid_fractions[n],
-    ) = racford_rice_solver(Nc, compositions, k_values)
+    ) = rachford_rice_solver(Nc, compositions, k_values)
     run_time += perf_counter() - t0
 
     # (2.2) Run tests on solver solutions

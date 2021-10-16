@@ -6,7 +6,7 @@ from check_convergence import EPS_T
 MAX_ITR = 100
 
 
-def racford_rice_solver(
+def rachford_rice_solver(
     Nc: int, zi: np.ndarray, Ki: np.ndarray
 ) -> Tuple[int, np.ndarray, np.ndarray, float, float]:
     """
