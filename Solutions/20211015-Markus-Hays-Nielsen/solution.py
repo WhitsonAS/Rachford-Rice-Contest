@@ -36,7 +36,7 @@ def rachford_rice_solver(
     Niter = 0
 
     while abs(h) > EPS_T:
-        Nc += 1
+        Niter += 1
 
         h = rr(V)
         dh = drr(V)
