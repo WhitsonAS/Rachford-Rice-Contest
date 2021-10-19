@@ -33,7 +33,7 @@ def rachford_rice_solver(
     V = (V_min + V_max) / 2
     h = np.inf
 
-    Nc = 0
+    Niter = 0
 
     while abs(h) > EPS_T:
         Nc += 1
@@ -51,11 +51,11 @@ def rachford_rice_solver(
         if V < V_min or V > V_max:
             V = (V_max + V_min) / 2
 
-        if Nc > MAX_ITR:
+        if Niter > MAX_ITR:
             break
 
     L = 1 - V
     xi = zi / (1 + V * (Ki - 1))
     yi = Ki * xi
 
-    return Nc, yi, xi, V, L
+    return Niter, yi, xi, V, L
